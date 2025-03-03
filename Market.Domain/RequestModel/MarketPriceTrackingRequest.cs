@@ -12,3 +12,4 @@ namespace Market.Domain.RequestModel
         public int PageSize { get; set; }
     }
 }
+    

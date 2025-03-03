@@ -20,7 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<MarketPriceTrackingResponse> Get(MarketPriceTrackingRequest request)
+        public async Task<MarketPriceTrackingResponse> Get(MarketPriceTrackingRequest? request)
         {
             var rs = await _marketPriceService.GetAllAsync(request);
             return rs;

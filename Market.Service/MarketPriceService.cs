@@ -26,5 +26,20 @@ namespace Market.Service
                 MarketPriceTrackings = rs
             };
         }
+
+        public Task<decimal> GetMaxPriceAsync(MarketPriceTrackingRequest request)
+        {
+            return _marketPriceTrackingRepository.GetMaxPrice(request);
+        }
+
+        public Task<decimal> GetMinPriceAsync(MarketPriceTrackingRequest request)
+        {
+            return _marketPriceTrackingRepository.GetMinPrice(request);
+        }
+
+        public Task<decimal> GetAveragePriceAsync(MarketPriceTrackingRequest request)
+        {
+            return _marketPriceTrackingRepository.GetAveragePrice(request);
+        }
     }
 }

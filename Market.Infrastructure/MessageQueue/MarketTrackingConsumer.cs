@@ -11,6 +11,7 @@ using Market.Domain.Entities;
 using Market.Domain.Interfaces.Provider;
 using System.IO;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Market.Infrastructure.MessageQueue
 {
@@ -19,6 +20,7 @@ namespace Market.Infrastructure.MessageQueue
         private readonly ILogger<MarketTrackingConsumer> _logger;
         private readonly IMarketPriceService _marketPriceService;
         private readonly IFileImportProvider _fileImportProvider;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _configuration;
         protected virtual string _topicName { get; set; }
         protected virtual int _consumerSize { get; set; }
@@ -26,11 +28,13 @@ namespace Market.Infrastructure.MessageQueue
         public MarketTrackingConsumer(IConfiguration configuration, 
             ILogger<MarketTrackingConsumer> logger, 
             IMarketPriceService marketPriceService,
-            IFileImportProvider fileImportProvider)
+            IFileImportProvider fileImportProvider,
+            IServiceProvider serviceProvider)
         {
             _logger = logger;
             _marketPriceService = marketPriceService;
             _fileImportProvider = fileImportProvider;
+            _serviceProvider = serviceProvider;
             _configuration = configuration;
             _topicName = _configuration.GetRequiredSection("Kafka").GetRequiredSection("Topic").GetRequiredSection("ImportFile").Value!;
             _logger = logger;
@@ -77,6 +81,7 @@ namespace Market.Infrastructure.MessageQueue
                     {
                         var consumeResult = consumer.Consume(stoppingToken);
                         var importedFile = JsonSerializer.Deserialize<ImportedFile>(consumeResult.Message.Value);
+                        using var newScope = _serviceProvider.CreateScope();
                         var fileService = _fileImportProvider.GetService((Path.GetExtension(importedFile?.Name) ?? string.Empty).TrimStart('.').ToLower());
                         await fileService!.ProcessAsync(importedFile!);
                         if (consumeResult.Offset % periodCommitNumber != 0) continue;

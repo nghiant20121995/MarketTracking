@@ -16,5 +16,8 @@ namespace Market.Domain.Interfaces.Repository
         Task UpdateAsync(MarketPriceTracking entity, CancellationToken cancellationToken = default);
         Task<List<MarketPriceTracking>> GetAllAsync(MarketPriceTrackingRequest request,
             CancellationToken cancellationToken = default);
+        Task<decimal> GetMaxPrice(MarketPriceTrackingRequest request);
+        Task<decimal> GetMinPrice(MarketPriceTrackingRequest request);
+        Task<decimal> GetAveragePrice(MarketPriceTrackingRequest request);
     }
 }

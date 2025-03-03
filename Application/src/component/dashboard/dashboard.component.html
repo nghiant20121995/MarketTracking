@@ -1,17 +1,17 @@
 <div class="grid grid-cols-3 gap-4">
     <div class="bg-white shadow rounded p-6 text-center">
         <div class="text-orange-500 text-4xl mb-2">&#128200;</div>
-        <div class="text-3xl font-bold">{{MaxPrice ? MaxPrice : '-'}}</div>
+        <div class="text-3xl font-bold">{{MaxPrice | number:'1.2-2'}}</div>
         <div class="text-sm text-gray-500">Maximum Price</div>
     </div>
     <div class="bg-white shadow rounded p-6 text-center">
         <div class="text-blue-500 text-4xl mb-2">&#128337;</div>
-        <div class="text-3xl font-bold">{{AveragePrice ? AveragePrice : '-'}}</div>
+        <div class="text-3xl font-bold">{{AveragePrice | number:'1.2-2'}}</div>
         <div class="text-sm text-gray-500">Average Price</div>
     </div>
     <div class="bg-white shadow rounded p-6 text-center">
         <div class="text-red-500 text-4xl mb-2">&#11088;</div>
-        <div class="text-3xl font-bold">{{MinPrice ? MinPrice : '-'}}</div>
+        <div class="text-3xl font-bold">{{MinPrice | number:'1.2-2'}}</div>
         <div class="text-sm text-gray-500">Minimum Price</div>
     </div>
 </div>

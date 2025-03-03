@@ -15,10 +15,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit(): void {
-    this.marketPriceTrackingService.GetDashboardFigure().subscribe((response) => {
-      this.MaxPrice = response.MaximumPrice;
-      this.MinPrice = response.MinimumPrice;
-      this.AveragePrice = response.AveragePrice;
+    this.marketPriceTrackingService.GetMaxPrice().subscribe((response) => {
+      this.MaxPrice = response;
+    });
+    this.marketPriceTrackingService.GetMinPrice().subscribe((response) => {
+      this.MinPrice = response;
+    });
+    this.marketPriceTrackingService.GetMinPrice().subscribe((response) => {
+      this.AveragePrice = response;
     });
   }
 

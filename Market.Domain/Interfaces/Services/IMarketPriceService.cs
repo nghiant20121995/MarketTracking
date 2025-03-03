@@ -11,5 +11,8 @@ namespace Market.Domain.Interfaces.Services
     public interface IMarketPriceService
     {
         Task<MarketPriceTrackingResponse> GetAllAsync(MarketPriceTrackingRequest request);
+        Task<decimal> GetMaxPriceAsync(MarketPriceTrackingRequest request);
+        Task<decimal> GetMinPriceAsync(MarketPriceTrackingRequest request);
+        Task<decimal> GetAveragePriceAsync(MarketPriceTrackingRequest request);
     }
 }

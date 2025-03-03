@@ -11,4 +11,11 @@ namespace Market.Domain.Response
         public IEnumerable<MarketPriceTracking>? MarketPriceTrackings { get; set; }
         public int TotalPage { get; set; }
     }
+
+    public class DashboardTrackingResponse
+    {
+        public decimal MaximumPrice { get; set; }
+        public decimal MinimumPrice { get; set; }
+        public decimal Average { get; set; }
+    }
 }
