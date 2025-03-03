@@ -21,6 +21,10 @@ export default class MarketPriceTrackingService {
     public UploadFile(file: File): Observable<ImportedFile> {
         var newFormData = new FormData();
         newFormData.append('file', file);
-        return this.httpClient.post<ImportedFile>(`${environment.apiUrl}/file/import/marketprice`, newFormData);
+        return this.httpClient.post<ImportedFile>(`${environment.apiUrl}/file/importmarketprice`, newFormData);
+    }
+
+    public GetImportedFile(id: string): Observable<ImportedFile> {
+        return this.httpClient.get<ImportedFile>(`${environment.apiUrl}/file?Id=${id}`);
     }
 }

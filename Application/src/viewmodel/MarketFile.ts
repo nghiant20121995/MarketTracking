@@ -1,4 +1,8 @@
-export class ImportedFile {
+export class BaseEntity {
+    id: string;
+}
+
+export class ImportedFile extends BaseEntity {
     name?: string;
     fileType: number;
     path?: string;

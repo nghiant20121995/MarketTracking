@@ -23,7 +23,7 @@ namespace API.Controllers
             _importedService = importedService;
         }
 
-        [Route("import/marketprice")]
+        [Route("importmarketprice")]
         [HttpPost]
         public async Task<ImportedFile> Post(IFormFile? file)
         {

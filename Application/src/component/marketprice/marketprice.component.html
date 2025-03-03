@@ -1,12 +1,9 @@
 <div class="bg-white shadow rounded p-6">
     <div class="flex items-center space-x-2">
-        <input
-          type="datetime-local"
-          id="datetime"
-          class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <input type="datetime-local" id="datetime"
+            class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-          Filter
+            Filter
         </button>
     </div>
     <button (click)="openModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
@@ -52,5 +49,40 @@
                 Upload
             </button>
         </div>
+    </div>
+</div>
+
+<div *ngIf="visibleProgression" class="fixed bottom-4 right-10 shadow-lg rounded-xl w-96 overflow-hidden">
+    <div class="bg-blue-500 text-white p-4 flex justify-between items-center">
+        <span class="font-semibold">File progress</span>
+        <button (click)="visibleProgression = false" class="text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+    <div class="bg-white p-4">
+        <div *ngIf="importedFileProgression.length === 0" class="flex items-center space-x-2">
+            <p class="text-sm text-gray-500">Empty</p>
+        </div>
+        <ng-container *ngFor="let item of importedFileProgression">
+            <div class="flex items-center space-x-2 p-2">
+                <div *ngIf="!item.isProcessed"
+                    class="loader w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin">
+                </div>
+                <svg *ngIf="item.isProcessed" xmlns="http://www.w3.org/2000/svg" class="text-green-500 w-6 h-6"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="16 9 11 16 8 12"></polyline>
+                </svg>
+                <div>
+                    <p class="font-semibold text-sm">{{item.name}}</p>
+                    <p class="text-sm text-gray-500">{{item.errorMessage}}</p>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>
