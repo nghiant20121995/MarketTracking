@@ -1,0 +1,56 @@
+<div class="bg-white shadow rounded p-6">
+    <div class="flex items-center space-x-2">
+        <input
+          type="datetime-local"
+          id="datetime"
+          class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+          Filter
+        </button>
+    </div>
+    <button (click)="openModal()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+        Upload File
+    </button>
+</div>
+<div class="bg-white shadow rounded p-6 mt-6">
+    <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse border border-gray-300 rounded-lg overflow-hidden">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 border border-gray-300">Transaction Date</th>
+                    <th class="px-4 py-2 border border-gray-300">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white hover:bg-gray-100">
+                    <td class="px-4 py-2 border border-gray-300">John Doe</td>
+                    <td class="px-4 py-2 border border-gray-300">john@example.com</td>
+                </tr>
+                <tr class="bg-gray-50 hover:bg-gray-100">
+                    <td class="px-4 py-2 border border-gray-300">Jane Smith</td>
+                    <td class="px-4 py-2 border border-gray-300">jane@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Popup Modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-semibold mb-4">Upload File</h2>
+
+        <input type="file" (change)="onFileSelected($event)"
+            class="block w-full mb-4 border border-gray-300 p-2 rounded">
+
+        <div class="flex justify-end">
+            <button (click)="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded mr-2">
+                Cancel
+            </button>
+            <button (click)="uploadFile()" class="bg-green-500 text-white px-4 py-2 rounded">
+                Upload
+            </button>
+        </div>
+    </div>
+</div>

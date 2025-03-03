@@ -1,0 +1,104 @@
+version: '1.0.0'
+services:
+  mongo:
+    image: mvertes/alpine-mongo:latest
+    ports:
+      - "27019:27017"
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    volumes:
+      - market:/app/market/mongodb
+    networks:
+      market-private-zone:
+        aliases:
+          - mongo-db
+
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2188
+      ZOOKEEPER_TICK_TIME: 2000
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2188"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+    volumes:
+      - market:/app/market/zookeeper
+    networks:
+      - market-private-zone
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    ports:
+      - "9094:9094"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2188
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29094,PLAINTEXT_HOST://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9094"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    volumes:
+      - market:/app/market/kafka
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    networks:
+      market-private-zone:
+        aliases:
+          - kafka-broker
+  kafka-ui-private:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 5080:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+    networks:
+      - market-private-zone
+  market-api:
+    build:
+      context: .
+      dockerfile: ./APIDockerfile
+    ports:
+      - "5000:8080"
+    volumes:
+      - market:/app/market/api
+    depends_on:
+      mongo:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - market-private-zone
+  market-import:
+    build:
+      context: .
+      dockerfile: ./ImportDockerfile
+    ports:
+      - "5050:8080"
+    volumes:
+      - market:/app/market/import
+    depends_on:
+      mongo:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - market-private-zone
+volumes: 
+  market:
+networks:
+  market-private-zone:

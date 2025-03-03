@@ -1,0 +1,12 @@
+<div class="bg-gradient-to-br from-gray-100 to-blue-50 min-h-screen flex">
+  <aside class="w-1/8 bg-gray-900 text-white p-3 flex flex-col justify-between shadow-lg">
+    <app-sidebar></app-sidebar>
+    <div>
+      <a href="#" class="block py-1 px-3 hover:bg-blue-600 rounded transition text-center">Account</a>
+    </div>
+  </aside>
+  <main class="flex-1 p-5 space-y-5">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+<app-toast #toast></app-toast>

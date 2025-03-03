@@ -1,0 +1,9 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.main-content {
+    height: 100%;
+    margin: 0;
+    background-color: #fbece4;
+}
+.justify-center {
+    justify-content: center;
+}

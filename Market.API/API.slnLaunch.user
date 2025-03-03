@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Market.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "..\\Market.Import\\Market.Import.csproj",
+        "Action": "Start",
+        "DebugTarget": "Market.Import"
+      }
+    ]
+  }
+]

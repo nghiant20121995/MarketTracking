@@ -1,0 +1,24 @@
+# Use Alpine-based .NET 8 SDK for building
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+WORKDIR /app
+
+COPY /Market.Domain ./Market.Domain
+COPY /Market.Infrastructure ./Market.Infrastructure
+COPY /Market.Service ./Market.Service
+COPY /Market.API ./Market.API
+# Copy and restore dependencies
+RUN dotnet restore ./Market.API/Market.API.csproj
+RUN dotnet publish ./Market.API/Market.API.csproj -c Release -o /out --no-restore --self-contained false
+
+# Use Alpine-based .NET 8 runtime for running
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS runtime
+WORKDIR /app
+
+# Copy the published output
+COPY --from=build /out .
+
+# Expose the port (optional)
+EXPOSE 8080
+
+# Set the entry point
+ENTRYPOINT ["dotnet", "Market.API.dll"]
