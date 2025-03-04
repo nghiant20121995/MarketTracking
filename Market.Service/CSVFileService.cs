@@ -66,7 +66,7 @@ namespace Market.Service
             var newFileId = Guid.NewGuid().ToString();
             var newFileName = newFileId + ".csv";
 
-            string uploadPath = Path.Combine("/uploads/csv/");
+            string uploadPath = Path.Combine("/app/market/api/uploads/csv/");
 
             // Ensure the directory exists
             if (!Directory.Exists(uploadPath))
@@ -91,14 +91,15 @@ namespace Market.Service
 
         public async Task ProcessAsync(ImportedFile file)
         {
-            if (!File.Exists(file.Path))
+            var path = "/app/market/import/uploads/csv/" + file.Name;
+            if (!File.Exists(path))
             {
                 file.ErrorMessage = $"The CSV file is not found. File name: {file.Name}";
                 file.IsProcessed = true;
                 await _importedFileRepository.UpdateAsync(file);
                 return;
             }
-            using var reader = new StreamReader(file.Path);
+            using var reader = new StreamReader(path);
             var headerLine = await reader.ReadLineAsync();
             if (headerLine == null)
             {
