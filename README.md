@@ -5,7 +5,7 @@ Before running the application, please make sure your device installed the Docke
 # Steps to run the application
 
 # Step 1
-Run the command: docker compose up
+Run the command: [code]docker compose up[code]
 # Step 2
 Go to the link: http://localhost:5000/api/ping to check health of the market api.
 
