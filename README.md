@@ -5,6 +5,7 @@ This web application is designed to read data from a provided CSV file (sampleSh
 - **Backend**: .NET 8 (C#)
 - **Frontend**: Angular, Tailwind CSS
 - **Data Format**: CSV
+- **Database**: MongoDB
 ### Business Flow
 ![image](https://github.com/user-attachments/assets/569445ca-1069-4ab0-adf1-ffc460c381c4)
 
