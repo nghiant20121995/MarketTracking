@@ -17,6 +17,7 @@ Run the command:
 ```bash
 docker compose up
 ```
+and wait for approximately 15 minutes until the installation process is complete.
 
 #### Step 2:
 Go to this link: [http://localhost:5000/api/ping](http://localhost:5000/api/ping) to check the health of the market API.
