@@ -98,6 +98,21 @@ services:
         condition: service_healthy
     networks:
       - market-private-zone
+  market-angular:
+    build:
+      context: .
+      dockerfile: ./ApplicationDockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - market:/app/market/angular
+    depends_on:
+      mongo:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - market-private-zone
 volumes: 
   market:
 networks:
