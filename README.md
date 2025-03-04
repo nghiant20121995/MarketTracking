@@ -12,6 +12,7 @@ Before running the application, please make sure Docker is installed on your dev
 Run the command:
 ```bash
 docker compose up
+```
 
 ### Step 2:
 Go to this link: [http://localhost:5000/api/ping](http://localhost:5000/api/ping) to check the health of the market API.
